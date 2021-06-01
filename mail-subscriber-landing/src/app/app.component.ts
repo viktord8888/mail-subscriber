@@ -1,6 +1,4 @@
-import { Component } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {UserRegistrationRequest} from './landing/user.registration.request';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',

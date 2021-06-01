@@ -6,7 +6,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {ActivationComponent} from './activation/activation.component';
 import {AppRoutingModule} from './app-routing.module';
-import { LandingComponent } from './landing/landing.component';
+import {LandingComponent} from './landing/landing.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +18,7 @@ import { LandingComponent } from './landing/landing.component';
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
