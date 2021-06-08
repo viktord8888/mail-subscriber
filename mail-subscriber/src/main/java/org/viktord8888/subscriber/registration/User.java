@@ -3,11 +3,11 @@ package org.viktord8888.subscriber.registration;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.viktord8888.subscriber.notification.Notification;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -21,6 +21,13 @@ public class User {
     private String email;
     private boolean active;
     private UUID userId;
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "User_Notification",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "notification_id")}
+    )
+    Set<Notification> notifications = new HashSet<>();
 
     static User of(final String email) {
         var user = new User();

@@ -7,12 +7,14 @@ import {FormsModule} from '@angular/forms';
 import {ActivationComponent} from './activation/activation.component';
 import {AppRoutingModule} from './app-routing.module';
 import {LandingComponent} from './landing/landing.component';
+import { ConfirmationComponent } from './confirmation/confirmation.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ActivationComponent,
-    LandingComponent
+    LandingComponent,
+    ConfirmationComponent
   ],
   imports: [
     BrowserModule,

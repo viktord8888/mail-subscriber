@@ -12,4 +12,6 @@ interface UserRepository extends CrudRepository<User, Long> {
 
     Set<User> findAllByActive(boolean active);
 
+    Optional<User> findByEmail(String email);
+
 }

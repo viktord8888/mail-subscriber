@@ -7,8 +7,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.viktord8888.subscriber.registration.ActiveSubscriber;
 
-import java.util.Set;
-
 @Service
 @RequiredArgsConstructor
 class MailSenderService implements MailSenderFacade {
@@ -17,11 +15,9 @@ class MailSenderService implements MailSenderFacade {
 
     @Override
     @Async("mailSenderTaskExecutor")
-    public void sendEmail(final Set<ActiveSubscriber> subscribers) {
-        subscribers.forEach(activeSubscriber -> {
-            var emailMessage = createEmailMessage(activeSubscriber);
-            emailSender.send(emailMessage);
-        });
+    public void sendEmail(final ActiveSubscriber subscriber) {
+        var emailMessage = createEmailMessage(subscriber);
+        emailSender.send(emailMessage);
     }
 
     private SimpleMailMessage createEmailMessage(final ActiveSubscriber activeSubscriber) {
@@ -29,7 +25,7 @@ class MailSenderService implements MailSenderFacade {
         message.setFrom("wiktormailsender@gmail.com");
         message.setTo(activeSubscriber.getEmail());
         message.setSubject("Java mail sender test");
-        message.setText("Test");
+        message.setText("dd");
         return message;
     }
 

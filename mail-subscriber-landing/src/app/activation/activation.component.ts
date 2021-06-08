@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {UserRegistrationRequest} from '../landing/user.registration.request';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {UserActivationRequest} from './user.activation.request';
 import {ActivatedRoute} from '@angular/router';
@@ -22,7 +21,10 @@ export class ActivationComponent implements OnInit {
 
   ngOnInit(): void {
     const request = new UserActivationRequest(this.userId);
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'Basic dXNlcjE6dXNlcjFQYXNz'
+    });
 
     this.http.post('http://localhost:8080/activate', JSON.stringify(request), {headers: headers})
       .subscribe(

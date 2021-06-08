@@ -6,7 +6,7 @@ import java.util.Set;
 
 public interface MailSenderFacade {
 
-    void sendEmail(final Set<ActiveSubscriber> subscribers);
+    void sendEmail(final ActiveSubscriber subscriber);
 
     void sendActivationMessage(ActivationMessage message);
 
