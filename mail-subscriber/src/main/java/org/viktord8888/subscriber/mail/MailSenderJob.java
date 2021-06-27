@@ -12,8 +12,9 @@ class MailSenderJob {
     private final MailSenderFacade mailSenderFacade;
     private final SubscriberFacade subscriberFacade;
 
-    @Scheduled(cron = "${mail.sender.cron}")
-    void sendEmails() { 
+//    @Scheduled(cron = "${mail.sender.cron}")
+    @Scheduled(fixedDelay = 30000)
+    void sendEmails() {
         subscriberFacade.getAll().
                 forEach(mailSenderFacade::sendEmail);
     }

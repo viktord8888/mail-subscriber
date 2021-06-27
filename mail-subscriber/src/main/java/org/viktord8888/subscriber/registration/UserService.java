@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.viktord8888.subscriber.mail.ActivationMessage;
 import org.viktord8888.subscriber.mail.MailSenderFacade;
+import org.viktord8888.subscriber.notification.Notification;
+import org.viktord8888.subscriber.notification.NotificationRepository;
 
 import java.util.Optional;
 import java.util.Set;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 class UserService implements SubscriberFacade {
 
     private final UserRepository userRepository;
+    private final NotificationRepository notificationRepository;
     private final MailSenderFacade mailSenderFacade;
 
 
@@ -38,9 +41,22 @@ class UserService implements SubscriberFacade {
     }
 
     public Set<ActiveSubscriber> getAll() {
+        Iterable<Notification> notifications = notificationRepository.findAll();
         return userRepository.findAllByActive(true)
                 .stream()
-                .map(user -> ActiveSubscriber.of(user.getEmail()))
+                .map(user -> toActiveSubscriber(user, notifications))
                 .collect(Collectors.toSet());
+    }
+
+    private ActiveSubscriber toActiveSubscriber(final User user, Iterable<Notification> notifications) {
+        for (Notification notification : notifications) {
+            for (Notification userNotification : user.getNotifications()) {
+                if (!notification.equals(userNotification)) {
+                    return ActiveSubscriber.of(user.getEmail(), notification);
+                }
+            }
+        }
+
+        return ActiveSubscriber.of(user.getEmail(), null);
     }
 }

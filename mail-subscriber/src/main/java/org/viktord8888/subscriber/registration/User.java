@@ -16,6 +16,7 @@ import java.util.UUID;
 public class User {
 
     @Id
+    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String email;
@@ -23,7 +24,7 @@ public class User {
     private UUID userId;
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
-            name = "User_Notification",
+            name = "user_notification",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "notification_id")}
     )
