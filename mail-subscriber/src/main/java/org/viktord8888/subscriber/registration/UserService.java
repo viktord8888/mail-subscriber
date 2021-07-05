@@ -3,11 +3,13 @@ package org.viktord8888.subscriber.registration;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.viktord8888.subscriber.mail.ActivationMessage;
 import org.viktord8888.subscriber.mail.MailSenderFacade;
 import org.viktord8888.subscriber.notification.Notification;
 import org.viktord8888.subscriber.notification.NotificationRepository;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -40,6 +42,7 @@ class UserService implements SubscriberFacade {
         return userRepository.save(user.activate());
     }
 
+    @Transactional
     public Set<ActiveSubscriber> getAll() {
         Iterable<Notification> notifications = notificationRepository.findAll();
         return userRepository.findAllByActive(true)
@@ -48,8 +51,21 @@ class UserService implements SubscriberFacade {
                 .collect(Collectors.toSet());
     }
 
+    @Transactional
+    @Override
+    public void saveActiveSubscriber(final ActiveSubscriber activeSubscriber) {
+        User user = userRepository.findByEmail(activeSubscriber.getEmail())
+                .orElseThrow(IllegalStateException::new);
+        user.getNotifications().add(activeSubscriber.getNextNotification());
+
+        userRepository.save(user);
+    }
+
     private ActiveSubscriber toActiveSubscriber(final User user, Iterable<Notification> notifications) {
         for (Notification notification : notifications) {
+            if (CollectionUtils.isEmpty(user.getNotifications())) {
+                return ActiveSubscriber.of(user.getEmail(), notification);
+            }
             for (Notification userNotification : user.getNotifications()) {
                 if (!notification.equals(userNotification)) {
                     return ActiveSubscriber.of(user.getEmail(), notification);

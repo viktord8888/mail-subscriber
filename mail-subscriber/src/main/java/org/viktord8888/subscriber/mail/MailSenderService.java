@@ -25,7 +25,7 @@ class MailSenderService implements MailSenderFacade {
         message.setFrom("wiktormailsender@gmail.com");
         message.setTo(activeSubscriber.getEmail());
         message.setSubject("Java mail sender test");
-        message.setText("dd");
+        message.setText(activeSubscriber.getNextNotification().getContent());
         return message;
     }
 

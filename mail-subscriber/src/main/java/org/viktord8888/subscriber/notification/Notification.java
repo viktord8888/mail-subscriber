@@ -1,15 +1,13 @@
 package org.viktord8888.subscriber.notification;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.viktord8888.subscriber.registration.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -19,7 +17,6 @@ import java.util.Set;
 public class Notification {
 
     @Id
-    @Column(name = "notification_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String content;
@@ -33,4 +30,16 @@ public class Notification {
         return new Notification(null, content, null, null);
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Notification that = (Notification) o;
+        return content.equals(that.content);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(content);
+    }
 }

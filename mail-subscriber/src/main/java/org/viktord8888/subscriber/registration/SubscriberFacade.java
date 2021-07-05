@@ -6,4 +6,6 @@ public interface SubscriberFacade {
 
     Set<ActiveSubscriber> getAll();
 
+    void saveActiveSubscriber(ActiveSubscriber activeSubscriber);
+
 }
