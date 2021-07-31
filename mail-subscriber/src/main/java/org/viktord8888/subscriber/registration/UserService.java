@@ -24,7 +24,6 @@ class UserService implements SubscriberFacade {
     private final NotificationRepository notificationRepository;
     private final MailSenderFacade mailSenderFacade;
 
-
     User register(final UserRegistrationRequest request) {
         Optional<User> maybeUser = userRepository.findByEmail(request.getEmail());
         maybeUser.ifPresent(user -> {
