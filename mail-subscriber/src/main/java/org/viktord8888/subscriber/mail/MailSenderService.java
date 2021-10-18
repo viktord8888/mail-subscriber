@@ -1,6 +1,7 @@
 package org.viktord8888.subscriber.mail;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
@@ -26,6 +27,7 @@ class MailSenderService implements MailSenderFacade {
         message.setTo(activeSubscriber.getEmail());
         message.setSubject("Java mail sender test");
         message.setText(activeSubscriber.getNextNotification().getContent());
+
         return message;
     }
 
