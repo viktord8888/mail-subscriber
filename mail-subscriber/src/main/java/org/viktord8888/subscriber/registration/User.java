@@ -30,7 +30,7 @@ public class User {
     )
     Set<Notification> notifications = new HashSet<>();
 
-    static User of(final String email) {
+    public static User of(final String email) {
         var user = new User();
         user.email = email;
         user.userId = UUID.randomUUID();
