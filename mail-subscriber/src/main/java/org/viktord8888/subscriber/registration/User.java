@@ -38,7 +38,7 @@ public class User {
         return user;
     }
 
-    User setActive() {
+    User makeActive() {
         this.active = true;
         return this;
     }
