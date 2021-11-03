@@ -38,7 +38,7 @@ class UserService implements SubscriberFacade {
     User activateUser(final String userId) {
         var user = userRepository.findByUserId(UUID.fromString(userId))
                 .orElseThrow(UserNotFoundException::new);
-        return userRepository.save(user.activate());
+        return userRepository.save(user.makeActive());
     }
 
     @Transactional
